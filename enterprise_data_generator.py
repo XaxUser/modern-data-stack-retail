@@ -14,7 +14,7 @@ from tenacity import retry, wait_exponential, stop_after_attempt
 # 0. CONFIGURATION SÉCURISÉE AZURE
 # ==========================================
 print("Chargement des variables d'environnement...")
-load_dotenv() # Lit le fichier .env
+load_dotenv() 
 CONNECTION_STRING = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
 CONTAINER_NAME = "landing-zone"
 
@@ -45,7 +45,7 @@ PRODUCT_PRICES = {prod: round(random.uniform(2.99, 899.99), 2) for prod in PRODU
 @retry(wait=wait_exponential(multiplier=1, min=2, max=10), stop=stop_after_attempt(5))
 def upload_to_azure(file_path, file_name):
     """Envoie le fichier vers le Data Lake Azure de manière sécurisée"""
-    # On crée un chemin virtuel dans Azure (ex: ventes/fichier.csv)
+    # On crée un chemin virtuel dans Azure 
     blob_client = container_client.get_blob_client(f"ventes/{file_name}")
     
     with open(file_path, "rb") as data:

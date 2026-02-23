@@ -39,7 +39,7 @@ os.makedirs("landing_zone_temp/dimensions/customers", exist_ok=True)
 print("\n--- Génération des Dimensions Initiales ---")
 
 # ==========================================
-# 2. MAGASINS (Doit correspondre à l'ancien script !)
+# 2. MAGASINS 
 # ==========================================
 print("Génération des Magasins...")
 store_ids = ['MAG_TOULOUSE_CENTRE', 'MAG_PARIS_NORD', 'MAG_LYON_SUD', 'WEB_FRANCE', 'DRIVE_TOULOUSE']

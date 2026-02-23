@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: mart_sales_reporting
+    description: "Table analytique finale (Schéma en Étoile) enrichissant les ventes avec clients, produits et magasins."
+    columns:
+      - name: transaction_id
+        description: "Clé primaire absolue du datamart"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Clé étrangère du client"
+        tests:
+          - not_null # Une vente doit toujours être rattachée à un client
+      - name: product_id
+        tests:
+          - not_null

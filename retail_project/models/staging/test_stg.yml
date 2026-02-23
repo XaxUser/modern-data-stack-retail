@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: stg_sales
+    description: "Table de staging des ventes nettoyées"
+    columns:
+      - name: transaction_id
+        description: "Clé primaire unique de la transaction"
+        tests:
+          - unique
+          - not_null
+      
+      - name: payment_method
+        description: "Moyen de paiement utilisé"
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['CARTE_BANCAIRE', 'ESPECES', 'PAYPAL', 'CARTE_CADEAU', 'APPLE_PAY']
+  - name: stg_customers
+    description: "Clients nettoyés"
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+      - name: segment
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Standard', 'Premium', 'VIP']
+
+  - name: stg_products
+    description: "Catalogue produits"
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+      - name: unit_price
+        tests:
+          - not_null
+
+  - name: stg_stores
+    description: "Référentiel magasins"
+    columns:
+      - name: store_id
+        tests:
+          - unique
+          - not_null

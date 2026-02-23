@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: source_retail
+    database: RETAIL_DB
+    schema: RAW
+    tables:
+      # Notre table de Faits (Générée en continu par ton ancien script)
+      - name: sales_raw
+        description: "Table brute contenant les événements de ventes venant de Snowpipe en streaming"
+      
+      # Nos 3 nouvelles tables de Dimensions
+      - name: raw_stores
+        description: "Table brute du référentiel des magasins"
+      - name: raw_products
+        description: "Table brute du catalogue des produits"
+      - name: raw_customers
+        description: "Table brute de la base clients"

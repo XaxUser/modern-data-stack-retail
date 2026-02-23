@@ -1,0 +1,50 @@
+services:
+  # 1. La vraie base de données de production pour Airflow
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    ports:
+      - "5432:5432"
+
+  # 2. Le Cerveau (Scheduler)
+  scheduler:
+    build: ./airflow_infra
+    command: airflow scheduler
+    restart: on-failure
+    depends_on:
+      - postgres
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./retail_project:/opt/airflow/dbt/retail_project
+      - ~/.dbt:/opt/airflow/dbt_home/.dbt
+      - ./logs:/opt/airflow/logs
+    environment:
+      # ON REMET LE LOCAL EXECUTOR (L'Autoroute à 4 voies !)
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      # On le connecte à la nouvelle base Postgres
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - DBT_PROFILES_DIR=/opt/airflow/dbt_home/.dbt
+
+  # 3. L'Interface Graphique (Webserver)
+  webserver:
+    build: ./airflow_infra
+    command: airflow webserver
+    restart: on-failure
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./retail_project:/opt/airflow/dbt/retail_project
+      - ~/.dbt:/opt/airflow/dbt_home/.dbt
+      - ./logs:/opt/airflow/logs
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - DBT_PROFILES_DIR=/opt/airflow/dbt_home/.dbt

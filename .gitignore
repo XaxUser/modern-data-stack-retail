@@ -1,0 +1,48 @@
+# =========================
+# 1. PYTHON & ENVIRONNEMENT
+# =========================
+.venv/
+__pycache__/
+*.pyc
+
+# =========================
+# 2. SÉCURITÉ (CRUCIAL !)
+# =========================
+.env
+
+# =========================
+# 3. DONNÉES LOCALES (Générateurs)
+# =========================
+# On ignore les dossiers où tombent les données brutes
+landing_zone/
+landing_zone_temp/
+# On ignore les fichiers de données par sécurité
+*.csv
+*.json
+*.parquet
+*.xlsx
+
+# =========================
+# 4. LOGS GLOBAUX & AIRFLOW
+# =========================
+logs/
+airflow_infra/logs/
+airflow-webserver.pid
+airflow.db
+airflow.cfg
+
+# =========================
+# 5. DBT (Dossier retail_project)
+# =========================
+retail_project/target/
+retail_project/logs/
+retail_project/dbt_internal_packages/
+retail_project/dbt_packages/
+
+# =========================
+# 6. SYSTÈME & IDE
+# =========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

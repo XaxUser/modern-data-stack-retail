@@ -44,5 +44,14 @@ retail_project/dbt_packages/
 # =========================
 .DS_Store
 Thumbs.db
-.vscode/
+
 .idea/
+
+# =========================
+# 7. AZURE FUNCTIONS (generateur_cloud)
+# =========================
+generateur_cloud/local.settings.json
+
+# On ignore les dossiers de configuration locale d'Azure et de VS Code
+generateur_cloud/.azure/
+generateur_cloud/.vscode/

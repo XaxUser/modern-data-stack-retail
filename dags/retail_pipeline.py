@@ -18,7 +18,7 @@ profile_config = ProfileConfig(
 with DAG(
     dag_id="mon_premier_pipeline_dbt",
     start_date=datetime(2024, 1, 1, tz="UTC"), # Date fictive de début
-    schedule="10 2 * * *",                     # Tous les jours à 02:10 du matin
+    schedule='0 3,15 * * *',                     # Deux fois par jour à 3h et 15h du matin
     catchup=False,                             # Ne pas rattraper le temps perdu si on l'éteint
     max_active_runs=1,                   
     tags=["retail", "dbt", "snowflake"],

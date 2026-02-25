@@ -30,7 +30,9 @@ airflow_infra/logs/
 airflow-webserver.pid
 airflow.db
 airflow.cfg
-
+postgres-data/
+postgres_db/
+docker-volumes/
 # =========================
 # 5. DBT (Dossier retail_project)
 # =========================
@@ -38,6 +40,9 @@ retail_project/target/
 retail_project/logs/
 retail_project/dbt_internal_packages/
 retail_project/dbt_packages/
+profiles.yml
+*.pem
+*.key
 
 # =========================
 # 6. SYSTÈME & IDE
@@ -55,3 +60,5 @@ generateur_cloud/local.settings.json
 # On ignore les dossiers de configuration locale d'Azure et de VS Code
 generateur_cloud/.azure/
 generateur_cloud/.vscode/
+.vscode/
+.pytest_cache/

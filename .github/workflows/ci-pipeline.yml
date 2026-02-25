@@ -1,0 +1,53 @@
+name: CI Pipeline - Modern Data Stack
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # ---------------------------------------------------
+  # JOB 1 : Validation du code Python (Airflow & Azure)
+  # ---------------------------------------------------
+  python-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Installation du Linter
+        run: pip install flake8
+
+      - name: Analyse syntaxique (Flake8)
+        # Vérifie les erreurs critiques de syntaxe (variables non définies, erreurs d'indentation fatales)
+        run: |
+          flake8 dags/ generateur_cloud/ --count --select=E9,F63,F7,F82 --show-source --statistics
+
+  # ---------------------------------------------------
+  # JOB 2 : Validation des modèles dbt (Data Quality)
+  # ---------------------------------------------------
+  dbt-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Installation de dbt-snowflake
+        run: pip install dbt-core dbt-snowflake
+
+      - name: Validation du graphe dbt (dbt parse)
+        # Vérifie que le code SQL et les fichiers YAML (schema) sont syntaxiquement corrects
+        run: |
+          dbt parse --project-dir dbt/retail_project
